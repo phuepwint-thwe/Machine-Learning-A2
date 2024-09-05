@@ -1,13 +1,11 @@
-version: '1'
+version: '3'
 services:
   dev:
-    image: ml-flask:latest
-    ports:
-      - "8000:8000"
     build:
       context: .
-      dockerfile: .Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
     volumes:
-      - ./source_code:/root/source_code
-      - ./.vscode-server:/root/.vscode-server
-    command: python3 app.py
+      - ./app:/app
+    command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
