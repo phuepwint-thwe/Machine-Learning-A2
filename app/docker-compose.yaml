@@ -4,8 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: st124784-ml-assignmnet2
     ports:
       - "8501:8501"
     volumes:
       - .:/app
-    command: ["streamlit", "run", "app.py"]
+    command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
