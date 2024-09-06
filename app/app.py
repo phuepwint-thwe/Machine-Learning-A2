@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import numpy as np
+import matplotlib as plt
 from linear_regression import LinearRegression, NormalPenalty, LassoPenalty, RidgePenalty, ElasticPenalty, Normal, Lasso, Ridge, ElasticNet
 
 # Load the old model

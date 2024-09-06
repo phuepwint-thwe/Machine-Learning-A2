@@ -1,7 +1,7 @@
 # Python file containing my from scratch linear
 from sklearn.model_selection import KFold
 import numpy as np
-import matplotlib.pyplot as plt 
+import matplotlib as plt 
 import math
 
 class LinearRegression(object):
