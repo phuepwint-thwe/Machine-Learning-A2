@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ppthwe17/st124784-ml-assignmnet2:latest
+    # Environment variables for the application
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8501
+    # Traefik configuration labels
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.streamlit-st124784.loadbalancer.server.port=8501
+      - traefik.http.routers.streamlit-st124784.rule=Host(`st124784.ml.brain.cs.ait.ac.th`)
+      - traefik.http.routers.streamlit-st124784.tls=true
+      - traefik.http.routers.streamlit-st124784.tls.certresolver=production
+      - traefik.http.routers.streamlit-st124784.entrypoints=websecure
+    # Define networks for the service
+    networks:
+      - default
+      - traefik_default
+
+# Define networks
+networks:
+  default:
+  traefik_default:
+    external: true
