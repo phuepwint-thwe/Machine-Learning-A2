@@ -2,28 +2,33 @@ version: '3.9'
 
 services:
   streamlit:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: ppthwe17/st124784-ml-assignmnet2:latest
-    # Environment variables for the application
+    # This command will run the Streamlit app (replace 'app.py' with your file)
+    command: streamlit run app.py --server.port 8501 --server.address 0.0.0.0
+    # Use your Docker image here (replace with your Streamlit image if needed)
+    image: ppthwe17/st124784-ml-assignmnet2:latest	
+    # For MAC M1 user
+    platform: linux/x86_64
+    # Environment variables (Streamlit specific)
     environment:
       - HOST=0.0.0.0
       - PORT=8501
-    # Traefik configuration labels
+    # Labels for Traefik routing
     labels:
+      # Enable Traefik to communicate with the Streamlit service
       - traefik.enable=true
-      - traefik.http.services.streamlit-st124784.loadbalancer.server.port=8501
-      - traefik.http.routers.streamlit-st124784.rule=Host(`st124784.ml.brain.cs.ait.ac.th`)
-      - traefik.http.routers.streamlit-st124784.tls=true
-      - traefik.http.routers.streamlit-st124784.tls.certresolver=production
-      - traefik.http.routers.streamlit-st124784.entrypoints=websecure
-    # Define networks for the service
+      # Traefik listens on port 80 for HTTP requests
+      - traefik.http.services.streamlit-web-st124784.loadbalancer.server.port=8501
+      # Optionally configure the domain name
+      - traefik.http.routers.streamlit-web-st124784.rule=Host(`st124784.ml.brain.cs.ait.ac.th`)
+      # Enable SSL
+      - traefik.http.routers.streamlit-web-st124784.tls=true
+      - traefik.http.routers.streamlit-web-st124784.tls.certresolver=production
+      - traefik.http.routers.streamlit-web-st124784.entrypoints=websecure
+    # Network configuration
     networks:
       - default
       - traefik_default
 
-# Define networks
 networks:
   default:
   traefik_default:
